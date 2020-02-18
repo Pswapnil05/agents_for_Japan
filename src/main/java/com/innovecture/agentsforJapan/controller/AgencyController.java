@@ -11,18 +11,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/agency")
+@CrossOrigin
+@RequestMapping("/agentsforjapan/agency")
 public class AgencyController {
 
   @Autowired
   private AgencyService agencyService;
+
+  @GetMapping({ "/hello" })
+  public String firstPage() {
+    return "Hello World";
+  }
 
   @GetMapping
   public ResponseEntity<List<Agency>> getAllAgencies () {
     return new ResponseEntity<List<Agency>>(agencyService.getAllAgencies(), HttpStatus.OK);
   }
 
-  @GetMapping("{agency_code}")
+  @GetMapping({"/{agency_code}"})
   public ResponseEntity<Agency> getAgencyById (@PathVariable Integer agency_code) {
     return new ResponseEntity<Agency>(agencyService.getAgencyById(agency_code), HttpStatus.OK);
   }
